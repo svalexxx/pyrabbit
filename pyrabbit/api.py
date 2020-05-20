@@ -613,7 +613,7 @@ class Client(object):
         return self._call(path, 'DELETE', headers=Client.json_headers)
 
     def get_messages(self, vhost, qname, count=1,
-                     requeue=False, truncate=None, encoding='auto'):
+                     ackmode='ack_requeue_false', truncate=None, encoding='auto'):
         """
         Gets <count> messages from the queue.
 
@@ -630,7 +630,7 @@ class Client(object):
         """
 
         vhost = quote(vhost, '')
-        base_body = {'count': count, 'requeue': requeue, 'encoding': encoding}
+        base_body = {'count': count, 'ackmode': ackmode, 'encoding': encoding}
         if truncate:
             base_body['truncate'] = truncate
         body = json.dumps(base_body)
